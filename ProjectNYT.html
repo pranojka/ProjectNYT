@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    </head>
+    <link rel="stylesheet" type="text/css" href="css/NYT.css">
+    <style type="text/css"> </style>
+    <body>
+        
+        <h1>NYT Explorer</h1>
+        <div id="root">
+            
+            
+                <input type="month" id="month">
+                
+            </form>
+        </div>
+        <script>
+
+   
+$.ajax({
+                url:"https://api.nytimes.com/svc/archive/v1/2016/1.json",
+                method: "GET",
+                data:{
+                "api-key": "603fd44d05be4c86abc3b8531459b25d"
+                q:document.getElementById("month").value},
+                
+                success: function(data){
+                 console.log (result);
+                 
+                 ReactDOM.render(root);
+
+                }
+            })
+            
+
+            
+        </script>
+    </body>
+    </html>
