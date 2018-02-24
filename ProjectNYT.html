@@ -2,23 +2,71 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
+
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
     </head>
     <link rel="stylesheet" type="text/css" href="css/NYT.css">
-    <style type="text/css"> </style>
+    <style type="text/css"> 
+
+    body{/* background-image: url??*/
+
+      background-repeat: no-repeat, repeat;
+      background-color: #cccccc;
+
+
+    }
+.form-inline {
+        position: center;
+     }
+    #center {
+      align-content: flex;
+      height:200px;
+  width: 240px;
+  background-color: grey;
+    }
+    #root{
+
+      border: 25px solid black;
+    padding: 25px;
+    margin: 25px;
+    }
+    .foter {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 40px;
+    width: 100%;
+    background-color: #734547;
+    color: white;
+    text-align: center;
+  
+}
+
+
+  </style>
     <body>
         
         <h1>NYT Explorer</h1>
      
             
-            
-                <input type="month" id="month">
-                <button onclick="find()">Find</button>
+            <form id="center">
+              <div class="form-inline">
+                <div class="col-xs-2">
+              
+              <input id="month" type="number" min="1" max="12" value="1" placeholder="Enter month" required> 
+              <input id="year" type="number" min="1851" max="2018" value="1851" placeholder="Enter year" required>
+                <button onclick="find()">Find</button></form>
                    <div id="root"></div>
+                   <div id="container" class='flex'></div>
+                   <footer id ="foter">
+                     data used from < a href="">
+                   </footer>
+
                 
             
         
@@ -51,8 +99,8 @@
         
          
          
-   componentDidMount(){
-$.ajax({
+                              componentDidMount(){
+                                         $.ajax({
                 url:"https://api.nytimes.com/svc/archive/v1/2016/1.json",
                 method: "GET",
                 data:{
@@ -65,10 +113,58 @@ $.ajax({
                      }
 
          render(){
-          return  <Urls urls={this.state.urls}/>;
+          return (<div> <Urls urls={this.state.urls}/>
+          <ArticalDetails/>
+        </div> );
         }
 
       }
+
+
+function ArticalDetails(props){
+  
+  return(
+
+  <div>
+    ...
+  </div>
+  );
+}
+
+
+function Results(props){
+  
+  return(
+
+  <div>
+    <ArticlePreview url={props.urls[0]}>
+
+  </ArticlePreview>
+</div>
+
+    );
+}
+
+class ArticlePreview extends React.Component {
+
+   componentDidMount(){  
+    $.ajax({       url: "https://www.linkpreview.net/"  
+         method: 'GET',     
+           data : {  
+          'key': " 5a9158a7b416741792dd7ae022541678a701bcd5efc59", 
+          'q': 'https://www.google.com'       }, 
+                success : function(result){ 
+              console.log(result);
+    render(){
+        return (
+            <div>  
+                <img src={props.img}/>
+                <h3>{props.title}</h3>
+                <p>{props.description}</p>
+            </div>
+        );
+    }
+}
 
       function Urls(props){
         return (
