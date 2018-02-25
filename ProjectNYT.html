@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-
+ 
 
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
@@ -10,182 +10,232 @@
     <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
     </head>
-    <link rel="stylesheet" type="text/css" href="css/NYT.css">
+    <link rel="stylesheet" type="text/css" href="css/project.css">
     <style type="text/css"> 
-
-    body{/* background-image: url??*/
-
-      background-repeat: no-repeat, repeat;
-      background-color: #cccccc;
-
-
-    }
-.form-inline {
-        position: center;
-     }
-    #center {
-      align-content: flex;
-      height:200px;
-  width: 240px;
-  background-color: grey;
-    }
-    #root{
-
-      border: 25px solid black;
-    padding: 25px;
-    margin: 25px;
-    }
-    .foter {
+     #foter {
     position: fixed;
     left: 0;
     bottom: 0;
-    height: 40px;
+    height: 70px;
     width: 100%;
     background-color: #734547;
-    color: white;
+    color: black;
     text-align: center;
+
+
   
 }
-
-
-  </style>
+.form-inline{
+    text-align: left;
+	position: fixed;
+	left: 20px;
+}
+.details {
+            float: left;
+            width: 25%;
+            background-color: darkorange;
+            color: white;
+            font-weight: bold;
+        }
+</style>
     <body>
-        
-        <h1>NYT Explorer</h1>
+         <header>
+       <h1>NYT Explorer</h1>
+      <hr/>
+    </header>
+       
      
             
             <form id="center">
               <div class="form-inline">
-                <div class="col-xs-2">
+               
               
               <input id="month" type="number" min="1" max="12" value="1" placeholder="Enter month" required> 
               <input id="year" type="number" min="1851" max="2018" value="1851" placeholder="Enter year" required>
                 <button onclick="find()">Find</button></form>
+            </div>
                    <div id="root"></div>
-                   <div id="container" class='flex'></div>
+                   <div id="container" class='flex'>
+                   
+                   </div>
                    <footer id ="foter">
-                     data used from < a href="">
+                     <hr/>
+      <p>Data provided by NY Times API</p>
+                    <p>Links preview by Link Preview API</p>
+      <p>&copy; Jovan Pranic 2018</p>
                    </footer>
 
-                
-            
-        
-        <script type="text/babel">
+      <script type="text/babel">
 
-            class App extends React.Component{
+      	class Link extends React.Component {
 
-                constructor(props){
-                    super(props);
+      	constructor(props){
+      	super(props);
+      	this.state={ data:[],
+        selectedLink : {description : "something"}};
+      	this.setData=this.setData.bind(this);
+        this.onMouseOver = this.onMouseOver.bind(this);
+      }
 
-                    this.state={'urls':[]};
-                    this.onSuccess=this.onSuccess.bind(this);
-                }
-                onSuccess(responseData){
+      onMousOver(link){
 
+      this.setState({selectedLink: link})
+    }
+      setData(call){
 
-                 let urls=[]   
-            for (var i=0; i<20; i++){
-                const doc=responseData.response.docs[i];
-                urls.push(doc.web_url);
-                
-                }
-                this.setState({'urls': urls});
-            }
+     
 
+      const links=call.response.docs.slice(o,4);
+      
+      this.setState({ data: call});
+  }
 
-    
-
-            
-        
-         
-         
-                              componentDidMount(){
-                                         $.ajax({
+      componentDidMount(){
+            $.ajax({
                 url:"https://api.nytimes.com/svc/archive/v1/2016/1.json",
                 method: "GET",
                 data:{
                 "api-key": "603fd44d05be4c86abc3b8531459b25d"},
                 
                 
-                success: this.onSuccess
-                
-                             });
-                     }
+                success: this.setData
+         })
+     }
 
-         render(){
-          return (<div> <Urls urls={this.state.urls}/>
-          <ArticalDetails/>
-        </div> );
+
+      render(){
+
+      console.log("render");
+
+   
+
+      return (
+                    <div className="page">
+                        <div className="master">
+                            <Table
+                                selectionHandler={this.onMousOver} 
+                                data={this.state.data}/>
+                        </div>
+                        <div className="details">
+                            
+                             <LinkDetails Link={this.state.selectedLink}/>
+                        </div>
+                    </div>
+                );
+            }
+
         }
-
-      }
-
-
-function ArticalDetails(props){
+	
+const LinkDetails=(props)=>{
   
-  return(
+  const Link=props.Link;
 
-  <div>
-    ...
+  console.log(Link);
+
+
+  return(
+  <div><p> Article Preview:</p>
+    <ul>
+      <li> {Link.source}</li>
+      <li>{Link.section_name}</li>
+       <li> {Link.pub_date}</li>
+       <li> {Link.snippet}</li>
+       <li>URL:<a href= {Link.web_url}>{Link.web_url}</a></li> 
+                       
+                        
+                    </ul>
+
+    
+
+
   </div>
+
+
+
   );
 }
 
 
-function Results(props){
+
+class Preview extends React.Component {
   
-  return(
+render(){
+  const links=this.props.data;
+  if(links.length==0){
 
-  <div>
-    <ArticlePreview url={props.urls[0]}>
-
-  </ArticlePreview>
-</div>
-
-    );
+  return ( <P>something<P>; 
+}
+<div> {
+  this.props.data.map( (article) => <Article link={article} key={article.web_url} url={article.web_url} mousOverHeandler={this.props.selectionHandler}/> )
 }
 
-class ArticlePreview extends React.Component {
 
-   componentDidMount(){  
-    $.ajax({       url: "https://www.linkpreview.net/"  
-         method: 'GET',     
-           data : {  
-          'key': " 5a9158a7b416741792dd7ae022541678a701bcd5efc59", 
-          'q': 'https://www.google.com'       }, 
-                success : function(result){ 
-              console.log(result);
+
+class Article extends React.Component {
+
+constructor(props){
+
+
+super(props)
+this.state={data:[]};
+this.onSuccess=this.onSuccess.bind(this);
+      }
+      onSuccess(call){
+
+     
+
+      const links=call.response.docs[i];
+      
+      this.setState({data: call);
+
+}
+  
+
+}
+
+ 
+ componentDidMount(){
+    $.ajax({
+    url: https://www.linkpreview.net/
+    method: "GET",
+    data : {
+    api-key: 'key': " 5a9158a7b416741792dd7ae022541678a701bcd5efc59", 
+          'q': 'https://www.google.com' 
+    },
+    success : this.onSuccess
+
+    });
+        
+    }}
+
     render(){
-        return (
-            <div>  
-                <img src={props.img}/>
-                <h3>{props.title}</h3>
-                <p>{props.description}</p>
-            </div>
-        );
-    }
-}
 
-      function Urls(props){
-        return (
-          <div> 
-            {
-              props.urls.map(
-                (url, index) => <Url key={index} url={url}/>
-              )
-            }
-          </div>
-        );
+    const Link = this.props.link;
+    const mousOverHeandler=this.props.mousOverHeandler;
+    return(
+
+        <div onmousemove={()=>mousOverHeandler(Link)}>
+          <p>{this.state.data.title}</p>
+          <img src={this.state.data.image} alt="PIP"/>
+          <p>{this.state.data.description}</p></div>
+         );
       }
 
-      function Url(props){
-        return <p><a href={props.url} target="_blank">{props.url}</a></p>;
-      }
 
-      function find(){
+
+  }
+
+function find(){
         const root = document.getElementById('root');
-        ReactDOM.render(<App />,  root);
-      }
-        </script>
-    </body>
-    </html>
+        ReactDOM.render(<Link />,  root);
+
+
+
+
+  
+
+
+
+            </script>
+        </body>
+        </html>
