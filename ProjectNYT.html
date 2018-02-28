@@ -3,239 +3,409 @@
 <head>
     <meta charset="utf-8">
  
-
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="HandheldFriendly" content="true">
     <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-    </head>
-    <link rel="stylesheet" type="text/css" href="css/project.css">
+    
+    <!-- <link rel="stylesheet" type="text/css" href="css/project.css"> -->
     <style type="text/css"> 
-     #foter {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    height: 70px;
-    width: 100%;
-    background-color: #734547;
-    color: black;
-    text-align: center;
 
+          @media screen and (max-width:1060px) {
 
-  
-}
-.form-inline{
-    text-align: left;
-	position: fixed;
-	left: 20px;
-}
-.details {
-            float: left;
-            width: 25%;
-            background-color: darkorange;
-            color: white;
-            font-weight: bold;
-        }
-</style>
-    <body>
-         <header>
-       <h1>NYT Explorer</h1>
-      <hr/>
-    </header>
-       
-     
+          #root {
+             width: 100%;
+             padding: 0;
+
+               }
+               .single-article
+               #header { width: 100%; }
+             body {font-size:1.5rem;}
+         }
             
-            <form id="center">
-              <div class="form-inline">
-               
-              
-              <input id="month" type="number" min="1" max="12" value="1" placeholder="Enter month" required> 
-              <input id="year" type="number" min="1851" max="2018" value="1851" placeholder="Enter year" required>
-                <button onclick="find()">Find</button></form>
-            </div>
-                   <div id="root"></div>
-                   <div id="container" class='flex'>
-                   
-                   </div>
-                   <footer id ="foter">
-                     <hr/>
-      <p>Data provided by NY Times API</p>
-                    <p>Links preview by Link Preview API</p>
-      <p>&copy; Jovan Pranic 2018</p>
-                   </footer>
+          
+                }
+        @media screen and (max-width:768px) {
+  
+            #root {
+         width: 100%;
+         }
+         body {font-size:1rem;} } 
+        
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+        }
+        #root {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-      <script type="text/babel">
+        #root > div {
+            flex: 1;
+            background: palegreen;
+            display: flex;
+            flex-direction: column;
+        }
+        .mainheader{
 
-      	class Link extends React.Component {
+        }
+        #header {
+            flex: 0 1 50px;
+            border-bottom: 1px solid green;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background: url("http://psdinnovative.com/wp-content/uploads/2014/04/News-Header-1-1600x450.jpg")
 
-      	constructor(props){
-      	super(props);
-      	this.state={ data:[],
-        selectedLink : {description : "something"}};
-      	this.setData=this.setData.bind(this);
-        this.onMouseOver = this.onMouseOver.bind(this);
-      }
+        }
 
-      onMousOver(link){
+        #main {
+            flex: 1;
+            display: flex;
 
-      this.setState({selectedLink: link})
-    }
-      setData(call){
+        }
 
-     
-
-      const links=call.response.docs.slice(o,4);
-      
-      this.setState({ data: call});
-  }
-
-      componentDidMount(){
-            $.ajax({
-                url:"https://api.nytimes.com/svc/archive/v1/2016/1.json",
-                method: "GET",
-                data:{
-                "api-key": "603fd44d05be4c86abc3b8531459b25d"},
-                
-                
-                success: this.setData
-         })
-     }
+        #main > .preview {
+            flex: 1 1 70%;
+            background: black;
+            flex-wrap: wrap;
+            background: url("https://i.pinimg.com/736x/68/7e/e3/687ee377f1820465b443950055671cb6--old-paper-background-printable-cards.jpg");
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-size: auto 100%;
+            
+             
+                 
+        
+        }
 
 
-      render(){
+        #main > div.preview > .single-article {
+            background: white;
+            margin: 10px;
+        }
 
-      console.log("render");
+        #main > div.preview >{
 
+        }
+        #main > .details {
+            flex: 1 1 30%;
+            background: magenta;
+        }
+
+
+
+
+
+        #footer {
+            flex: 0 1 50px;
+            /* background-color: #734547;
+            color: black; */
+            border-top: 1px solid green;
+            background: grey;
+
+        }
+
+        input[type="number"] {
+            width: 120px;
+        }
+
+        
+
+
+        header > form {
+            flex: 0 1 50%;
+            display: flex;
+            /* border: 1px solid red; */
+            justify-content: flex-end;
+            padding: 5px;
+        }
+
+        header > form > input[type="submit"] {
+            flex: 0 1 60px;
+            
+        }
+
+        header > form > input[type="number"] {
+            flex: 1;
+            margin-right: 5px;
+        }
+
+        header > h1 {
+            flex: 1 1 30%;
+            /* border: 1px solid red; */
+            margin: 0;
+        }
+
+    </style>
+</head>
+    
+<body>
+
+       
    
 
-      return (
-                    <div className="page">
-                        <div className="master">
-                            <Table
-                                selectionHandler={this.onMousOver} 
-                                data={this.state.data}/>
-                        </div>
-                        <div className="details">
+    <div id="root"></div>
+                
+
+    <script type="text/babel">
+
+
+        class Link extends React.Component {
+            constructor(props) {
+                super(props);
+                this.setData=this.setData.bind(this);
+                this.handleSubmit = this.handleSubmit.bind(this);
+                this.handleMonthChange = this.handleMonthChange.bind(this);
+                this.handleYearChange = this.handleYearChange.bind(this);
+                this.handleArticleClick = this.handleArticleClick.bind(this);
+
+                this.state={
+                    data: [],
+                    year: '1951',
+                    month: '1',
+                    selectedArticle: {}
+                };
+            }
+
+
+            setData(data) {
+                const links=data.response.docs.slice(0,4);
+                this.setState(() => ({ data: links }));
+            }
+            
+            handleMonthChange(e) {
+                const month = e.target.value;
+                console.log(month);
+                this.setState(() => ({ month: month }));
+            }
+            
+            handleYearChange(e) {
+                const year = e.target.value;
+                this.setState(() => ({ year: year }));
+            }
+            handleSubmit(e) {
+                e.preventDefault();
+                const year = this.state.year;
+                const month = this.state.month;
+
+                console.log(year, month);
+                var url = `https://api.nytimes.com/svc/archive/v1/${year}/${month}.json`;
+                url += '?' + $.param({
+                'api-key': "b7c8b553a6284a30bbbbf898f3af2212"
+                });
+
+                $.ajax({
+                    url: url,
+                    method: 'GET',
+                    success: this.setData,
+                    error: this.setError
+                });
+            }
+
+            handleArticleClick(selectedArticle) {
+                this.setState(() => ({ selectedArticle: selectedArticle }));
+            }
+
+            render() {
+                const currentYear = new Date().getFullYear();
+                return (
+                    <div className="mainheader">
+                        <header id="header">
+                            <h1>NYT Explorer</h1>
+                            <form onSubmit={this.handleSubmit}>
+                                <input id="month" type="number" min="1" max="12"  placeholder="Month" onChange={this.handleMonthChange} value={this.state.month}  /> 
+                                <input id="year" type="number" min="1851" max={currentYear}  placeholder="Year" onChange={this.handleYearChange} value={this.state.year} />
+                                <input type="submit" value="Find" />
+                            </form>
+
+
+                        </header>
+                
+                        
+                        <main id="main">
+                            <Preview
+                         
+                                data={this.state.data}
+                                handleArticleClick={this.handleArticleClick}
+                            /> <ArticleDetails selectedArticle={this.state.selectedArticle}/>
                             
-                             <LinkDetails Link={this.state.selectedLink}/>
-                        </div>
+                                
+                        </main>
+
+                        <footer id ="footer">
+                        
+                            
+                            <hr />
+                            <p>Data provided by NY Times API</p>
+                            <p>Links preview by Link Preview API</p>
+                            <p>&copy; Jovan Pranic 2018</p>
+                            
+                        </footer>
+
+                        
+                            <div className="details">
+                              
+                            </div>
+                        
                     </div>
                 );
             }
-
         }
-	
-const LinkDetails=(props)=>{
-  
-  const Link=props.Link;
-
-  console.log(Link);
-
-
-  return(
-  <div><p> Article Preview:</p>
-    <ul>
-      <li> {Link.source}</li>
-      <li>{Link.section_name}</li>
-       <li> {Link.pub_date}</li>
-       <li> {Link.snippet}</li>
-       <li>URL:<a href= {Link.web_url}>{Link.web_url}</a></li> 
-                       
-                        
-                    </ul>
-
-    
-
-
-  </div>
-
-
-
-  );
-}
-
-
-
-class Preview extends React.Component {
-  
-render(){
-  const links=this.props.data;
-  if(links.length==0){
-
-  return ( <P>something<P>; 
-}
-<div> {
-  this.props.data.map( (article) => <Article link={article} key={article.web_url} url={article.web_url} mousOverHeandler={this.props.selectionHandler}/> )
-}
-
-
-
-class Article extends React.Component {
-
-constructor(props){
-
-
-super(props)
-this.state={data:[]};
-this.onSuccess=this.onSuccess.bind(this);
-      }
-      onSuccess(call){
-
-     
-
-      const links=call.response.docs[i];
-      
-      this.setState({data: call);
-
-}
-  
-
-}
 
  
- componentDidMount(){
-    $.ajax({
-    url: https://www.linkpreview.net/
-    method: "GET",
-    data : {
-    api-key: 'key': " 5a9158a7b416741792dd7ae022541678a701bcd5efc59", 
-          'q': 'https://www.google.com' 
-    },
-    success : this.onSuccess
 
-    });
+   
+        class Preview extends React.Component {
+                render(){
+                    const links=this.props.data;
+                    return (
+                        <div className="preview">
+                            {
+                                links.map( (article) => {
+                                    return <Article handleArticleClick={this.props.handleArticleClick} link={article} key={article.web_url} url={article.web_url} />;
+                                } )
+                            }
+                        </div>
+                        
+                    );
+            }
+        }
+
+    class Article extends React.Component {
+        constructor(props) {
+            super(props);
+            this.setData = this.setData.bind(this);
+            this.handleArticleClick = this.handleArticleClick.bind(this);
+            this.state = {
+                details: {}
+            };
+        }
+
+    handleArticleClick() {
+            console.log(this.props.link);
+            const selectedArticle = this.props.link;
+            this.props.handleArticleClick(selectedArticle);
+        }
+
+        setData(data) {
+            const details = data;
+            this.setState(() => ({ details: details }));
+        }
+
+        componentDidMount() {
+            const key = '5a9158a7b416741792dd7ae022541678a701bcd5efc59';
+            // const url = `http://api.linkpreview.net/?key=${key}&q=${this.props.url}`;
+            const url = `http://api.linkpreview.net/?key=123456&q=https://www.google.com`;
+            
+            $.ajax({
+                url: url,
+                method: 'GET',
+                success: this.setData,
+                error: this.setError
+            });
+        }
         
-    }}
 
+    
+        render(){
+            const link = this.props.link;
+            const handleArticleClick=this.props.handleArticleClick;
+            
+            return(
+                <div className="single-article" onClick={this.handleArticleClick}>
+                    <img src={this.state.details.image} alt="PIP"/>
+                    <h4>{this.state.details.title}</h4>
+                    <p>{this.state.details.description}</p>
+                </div>
+                
+              
+
+
+
+
+
+            );
+        }
+    } 
+
+    class ArticleDetails extends React.Component{
+
+    constructor(props)
+    super(props)
+    this.state=
     render(){
 
-    const Link = this.props.link;
-    const mousOverHeandler=this.props.mousOverHeandler;
-    return(
+    const link = this.props.link;
+            const handleArticleClick=this.props.handleArticleClick;
 
-        <div onmousemove={()=>mousOverHeandler(Link)}>
-          <p>{this.state.data.title}</p>
-          <img src={this.state.data.image} alt="PIP"/>
-          <p>{this.state.data.description}</p></div>
-         );
-      }
+            return(
+                <div className="details" onClick={this.handleArticleClick}>>
+                    <h3>Source: {link.source}</h3>    
+                </div> );
 
-
-
-  }
-
-function find(){
-        const root = document.getElementById('root');
-        ReactDOM.render(<Link />,  root);
-
-
-
-
+                }
+            }
   
 
 
+    ReactDOM.render(<Link />, document.getElementById('root'));
+ 
 
-            </script>
-        </body>
-        </html>
+    </script>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+    
