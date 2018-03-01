@@ -3,9 +3,7 @@
 <head>
     <meta charset="utf-8">
  
-    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="HandheldFriendly" content="true">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
@@ -14,7 +12,7 @@
     <!-- <link rel="stylesheet" type="text/css" href="css/project.css"> -->
     <style type="text/css"> 
 
-          @media screen and (max-width:1060px) {
+      @media screen and (max-width:1060px) {
 
           #root {
              width: 100%;
@@ -28,13 +26,13 @@
             
           
                 }
-        @media screen and (max-width:768px) {
+
+                @media screen and (max-width:768px) {
   
             #root {
          width: 100%;
          }
          body {font-size:1rem;} } 
-        
         * {
             box-sizing: border-box;
         }
@@ -45,59 +43,64 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            background: url("https://static4.depositphotos.com/1001877/506/i/450/depositphotos_5069333-stock-photo-old-paper.jpg");
         }
 
         #root > div {
             flex: 1;
-            background: palegreen;
+            
             display: flex;
             flex-direction: column;
         }
-        .mainheader{
 
-        }
         #header {
             flex: 0 1 50px;
-            border-bottom: 1px solid green;
+            margin-bottom: 35px;
+         
             display: flex;
             justify-content: space-between;
-            padding: 10px;
-            background: url("http://psdinnovative.com/wp-content/uploads/2014/04/News-Header-1-1600x450.jpg")
-
+            padding: 1px;
+            
         }
 
         #main {
             flex: 1;
             display: flex;
+            padding: -10px 0 10px -10px
 
         }
 
         #main > .preview {
             flex: 1 1 70%;
-            background: black;
-            flex-wrap: wrap;
-            background: url("https://i.pinimg.com/736x/68/7e/e3/687ee377f1820465b443950055671cb6--old-paper-background-printable-cards.jpg");
-            background-repeat: no-repeat;
-            background-size: contain;
-            background-size: auto 100%;
+
             
-             
-                 
+            background: blue;
+            flex-wrap: wrap;
+           background: url("https://images.pexels.com/photos/269923/pexels-photo-269923.jpeg?w=940&h=650&auto=compress&cs=tinysrgb");
+            background-repeat: no-repeat;
+            
+            background-size: auto 160%;
+
+
+        }
+
+
+     .single-article {
         
-        }
-
-
-        #main > div.preview > .single-article {
-            background: white;
+        
             margin: 10px;
+            align-content: flex-start;
+            flex: 1;
+            flex-direction: column;
+    
         }
 
-        #main > div.preview >{
 
-        }
         #main > .details {
+            background:url( "https://c1.staticflickr.com/3/2084/2118265369_b99c208792_o.jpg");
             flex: 1 1 30%;
-            background: magenta;
+           
+            background-repeat: no-repeat;
         }
 
 
@@ -108,8 +111,16 @@
             flex: 0 1 50px;
             /* background-color: #734547;
             color: black; */
-            border-top: 1px solid green;
-            background: grey;
+           /* border-top: 1px solid green;*/
+              text-align: center;
+              text-decoration: underline;
+              color: black;
+
+        
+
+        }
+
+        #footer>h1,p { font-size: 25px;
 
         }
 
@@ -136,12 +147,13 @@
         header > form > input[type="number"] {
             flex: 1;
             margin-right: 5px;
+
         }
 
         header > h1 {
             flex: 1 1 30%;
-            /* border: 1px solid red; */
-            margin: 0;
+            
+           ;
         }
 
     </style>
@@ -153,7 +165,7 @@
    
 
     <div id="root"></div>
-                
+                 
 
     <script type="text/babel">
 
@@ -217,7 +229,7 @@
             render() {
                 const currentYear = new Date().getFullYear();
                 return (
-                    <div className="mainheader">
+                    <div>
                         <header id="header">
                             <h1>NYT Explorer</h1>
                             <form onSubmit={this.handleSubmit}>
@@ -226,18 +238,18 @@
                                 <input type="submit" value="Find" />
                             </form>
 
-
                         </header>
-                
                         
                         <main id="main">
+                            
+                          
                             <Preview
-                         
+                               
                                 data={this.state.data}
                                 handleArticleClick={this.handleArticleClick}
-                            /> <ArticleDetails selectedArticle={this.state.selectedArticle}/>
-                            
-                                
+                            />
+                        
+                            <ArticleDetails selectedArticle={this.state.selectedArticle}/>    
                         </main>
 
                         <footer id ="footer">
@@ -250,19 +262,16 @@
                             
                         </footer>
 
-                        
+                        {/*
                             <div className="details">
-                              
+                                <LinkDetails link={this.state.selectedLink} />
                             </div>
-                        
+                        */}
                     </div>
                 );
             }
         }
 
- 
-
-   
         class Preview extends React.Component {
                 render(){
                     const links=this.props.data;
@@ -289,21 +298,10 @@
             };
         }
 
-    handleArticleClick() {
-            console.log(this.props.link);
-            const selectedArticle = this.props.link;
-            this.props.handleArticleClick(selectedArticle);
-        }
-
-        setData(data) {
-            const details = data;
-            this.setState(() => ({ details: details }));
-        }
-
         componentDidMount() {
             const key = '5a9158a7b416741792dd7ae022541678a701bcd5efc59';
-            // const url = `http://api.linkpreview.net/?key=${key}&q=${this.props.url}`;
-            const url = `http://api.linkpreview.net/?key=123456&q=https://www.google.com`;
+             //const url = `http://api.linkpreview.net/?key=${key}&q=${this.props.url}`;
+           const url = `http://api.linkpreview.net/?key=123456&q=https://www.google.com`
             
             $.ajax({
                 url: url,
@@ -313,11 +311,18 @@
             });
         }
         
+        handleArticleClick() {
+            console.log(this.props.link);
+            const selectedArticle = this.props.link;
+            this.props.handleArticleClick(selectedArticle);
+        }
 
-    
+        setData(data) {
+            const details = data;
+            this.setState(() => ({ details: details }));
+        }
         render(){
             const link = this.props.link;
-            const handleArticleClick=this.props.handleArticleClick;
             
             return(
                 <div className="single-article" onClick={this.handleArticleClick}>
@@ -325,35 +330,21 @@
                     <h4>{this.state.details.title}</h4>
                     <p>{this.state.details.description}</p>
                 </div>
-                
               
-
-
-
-
-
             );
         }
     } 
 
-    class ArticleDetails extends React.Component{
 
-    constructor(props)
-    super(props)
-    this.state=
-    render(){
-
-    const link = this.props.link;
-            const handleArticleClick=this.props.handleArticleClick;
-
-            return(
-                <div className="details" onClick={this.handleArticleClick}>>
-                    <h3>Source: {link.source}</h3>    
-                </div> );
-
-                }
-            }
-  
+   class ArticleDetails extends React.Component {
+        render() {
+            return (
+                <div className="details" >
+                    <h3>test</h3>    
+                </div>
+            );
+        }
+    } 
 
 
     ReactDOM.render(<Link />, document.getElementById('root'));
