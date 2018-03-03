@@ -8,9 +8,9 @@ class Link extends React.Component {
       this.handleArticleClick = this.handleArticleClick.bind(this);
       this.state = {
           allArticles: {},
-          year: '1951',
+          year: '1851',
           month: '1',
-          pageSize: 15,
+          pageSize: 20,
           selectedArticle: {}
       };
   }
@@ -65,6 +65,7 @@ class Link extends React.Component {
         <header id="header">
           <h1>NYT Explorer</h1>
           <form onSubmit={this.handleSubmit}>
+          <p>Chose the date: </p>
             <input
               id="month" 
               type="number" 
@@ -101,7 +102,7 @@ class Link extends React.Component {
         <footer id ="footer">
           <p>Data provided by NY Times API</p>
           <p>Links preview by Link Preview API</p>
-          <p>&copy; Jovan Pranic 2018</p>
+          <p>&copy; Jovana Pranic 2018</p>
         </footer>
       </div>
     );
@@ -137,8 +138,8 @@ class Article extends React.Component {
 
   componentDidMount() {
     const key = '5a9158a7b416741792dd7ae022541678a701bcd5efc59';
-  //  const url = `http://api.linkpreview.net/?key=${key}&q=${this.props.url}`;
-    const url = `http://api.linkpreview.net/?key=123456&q=https://www.google.com`
+   // const url = `https://api.linkpreview.net/?key=${key}&q=${this.props.url}`;
+     const url = `http://api.linkpreview.net/?key=123456&q=https://www.google.com`
   
     $.ajax({
         url: url,
@@ -181,12 +182,13 @@ class ArticleDetails extends React.Component {
     console.log(thisArticle.headline);
     return (
         <div id="details" className="visible" >
-            <h3>Details</h3>
+            <h2> Artickle Details:</h2>
             {
               !!Object.keys(thisArticle).length &&
               <ul>
+              <li>Headline: {thisArticle.headline.main}</li>
                 <li>Snippet: {thisArticle.snippet}</li>
-                <li>Headline: {thisArticle.headline.main}</li>
+                
                 <li>Word Count: {thisArticle.word_count}</li>
               </ul>
             }
