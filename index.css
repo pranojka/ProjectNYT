@@ -5,31 +5,41 @@
 
 body {
   margin: 0px;
+
+        
+
 }
 
 #root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: palegreen;
+  /*background: palegreen;*/
+  background: url("https://static4.depositphotos.com/1001877/506/i/450/depositphotos_5069333-stock-photo-old-paper.jpg");
+
 }
 
 #page {
   flex: 1;
   display: flex;
   flex-direction: column;
+   background: url("https://images.pexels.com/photos/269923/pexels-photo-269923.jpeg?w=940&h=650&auto=compress&cs=tinysrgb");
+
+  background-repeat: no-repeat;
+
 
 }
 /* =================================== HEADER ================================= */
 #header {
   flex: 0 1 auto;
-  background: paleturquoise;
+  border-color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px;
 }
 #header > h1 {
+  color: white;
   margin: 0;
   flex: 0 1 300px;
 }
@@ -39,9 +49,11 @@ body {
   display: flex;
   justify-content: flex-end;
   /* border: 1px solid red; */
+
 }
 
 #header > form > * {
+
   margin-left: 5px;
 }
 
@@ -60,7 +72,9 @@ body {
 }
 
 #main > div > #gallery {
-  background: palegoldenrod;
+ /* background: palegoldenrod;*/
+ 
+background-repeat: no-repeat;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -83,6 +97,14 @@ body {
   flex: 0 0 250px; 
 }
 
+#main > div > #details >h2 {
+font-weight: bold; }
+ 
+#main > div > #details >h2> ul{ font-size: 5px;
+  font-weight: bold;
+
+}
+
 .visible {
   display: none;
 }
@@ -92,8 +114,10 @@ body {
 /* =================================== FOOTER ================================= */
 #footer {
   flex: 0 1 auto;
-  background: palevioletred;
+  text-decoration-color: white;
   text-align: center;
+  font-style: italic;
+
 }
 
 
