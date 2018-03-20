@@ -1,4 +1,8 @@
-class Link extends React.Component {
+import React, { Component } from 'react';
+
+import './index.css';
+
+class Link extends Component {
   constructor(props) {
       super(props);
       this.setData=this.setData.bind(this);
@@ -197,4 +201,6 @@ class ArticleDetails extends React.Component {
   }
 } 
 
-ReactDOM.render(<Link />, document.getElementById('root'));
+
+export default Link;
+
